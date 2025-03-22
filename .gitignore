@@ -2,3 +2,5 @@ rag_app/backend/app/config.py
 .env
 rag_app/backend/app/build
 venv/
+*.pyc
+__pycache__/

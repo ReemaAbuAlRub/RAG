@@ -1,0 +1,5 @@
+fastapi>=0.70.0
+uvicorn>=0.15.0
+faiss-cpu>=1.7.2
+sentence-transformers>=2.2.2
+transformers>=4.29.2
