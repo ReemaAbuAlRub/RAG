@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from  .api.endpoints import upload, query
+from  api.endpoints import upload, query
 import uvicorn
 
 app = FastAPI(title="RAG Application API")

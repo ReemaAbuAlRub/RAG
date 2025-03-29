@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from  ..dependencies import rag_service
+from  dependencies import rag_service
 
 
 router = APIRouter()

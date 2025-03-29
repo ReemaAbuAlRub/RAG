@@ -1,5 +1,5 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from ...dependencies import document_service 
+from dependencies import document_service 
 import numpy as np 
 
 router = APIRouter()

@@ -1,22 +1,50 @@
- # rag_app/backend/Dockerfile
+# Use Conda official image
+FROM continuumio/miniconda3:latest
 
-# Use an official Python runtime as a base image
-FROM python:3.9-slim
-
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the requirements file and install dependencies
+# Copy requirements.txt
 COPY requirements.txt .
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+# Create a modified requirements file with compatible versions
+RUN grep -v "langchain" requirements.txt > requirements_modified.txt && \
+    grep -v "langchain-community" requirements_modified.txt > requirements_final.txt
 
-# Copy the rest of the backend code into the container
-COPY . .
+# Create a environment.yml file with compatible package versions
+RUN echo "name: rag-env" > environment.yml && \
+    echo "channels:" >> environment.yml && \
+    echo "  - conda-forge" >> environment.yml && \
+    echo "  - defaults" >> environment.yml && \
+    echo "dependencies:" >> environment.yml && \
+    echo "  - python=3.9" >> environment.yml && \
+    echo "  - pip" >> environment.yml && \
+    echo "  - faiss-cpu" >> environment.yml && \
+    echo "  - pip:" >> environment.yml && \
+    echo "    - -r requirements_final.txt" >> environment.yml && \
+    echo "    - langchain==0.3.21" >> environment.yml && \
+    echo "    - langchain-community==0.3.20" >> environment.yml
 
-# Expose port 8000 (default for FastAPI)
+# Create the Conda environment
+RUN conda env create -f environment.yml
+
+# Make RUN commands use the new environment
+SHELL ["conda", "run", "-n", "rag-env", "/bin/bash", "-c"]
+
+# Copy the project code
+COPY . /app
+
+# Create __init__.py files to make directories into packages
+RUN find /app -type d -exec touch {}/__init__.py \;
+
+# Set PYTHONPATH to include the app directory
+ENV PYTHONPATH=/app
+
+# Expose the port for the API
 EXPOSE 8000
 
-# Command to run the FastAPI app using Uvicorn
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Set up the entrypoint
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "rag-env"]
+
+# Run the application
+CMD ["python", "main.py"] 

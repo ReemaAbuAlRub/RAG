@@ -1,5 +1,5 @@
 from fastapi import UploadFile
-from backend.app.adapters.vector_store import VectorStore
+from adapters.vector_store import VectorStore
 import io
 from langchain.embeddings import OpenAIEmbeddings 
 from PyPDF2 import PdfReader
