@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import requests
-# from ..backend.app.config import config
-base_url = "http://localhost:8000/api"
+
+base_url = "http://rag_backend:8000/api"
 
 def upload_document(file) -> dict:
     url = f"{base_url}/upload"

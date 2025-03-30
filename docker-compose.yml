@@ -5,8 +5,8 @@ services:
     container_name: rag_backend
     ports:
       - "8000:8000"
-    environment:
-      - OPENAI_API_KEY=${API_KEY}  # Make sure to set this in your .env file or environment
+    env_file:
+      -  .env
     restart: always
 
   frontend:
@@ -14,8 +14,8 @@ services:
     container_name: rag_frontend
     ports:
       - "8501:8501"
-    environment:
-      - API_BASE_URL=http://backend:8000/api  # If your front-end uses this variable to reach the backend
+    env_file:
+      -  .env
     depends_on:
       - backend
     restart: always

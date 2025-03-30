@@ -1,7 +1,7 @@
 import numpy as np
 import openai
 from openai import OpenAI
-from backend.app.config import config
+from config import config
 
 class RagService:
 
@@ -10,7 +10,7 @@ class RagService:
         self.embeddings = self.document_service.embeddings 
         self.normalize_embeddings = normalize_embeddings
         self.client = OpenAI(api_key=config.api_key)
-        print("API KEY: ",config.api_key)
+        # print("API KEY: ",config.openai_api_key)
         self.model=config.model
 
     @staticmethod

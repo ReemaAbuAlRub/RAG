@@ -10,4 +10,5 @@ Requests==2.32.3
 setuptools==78.0.2
 streamlit==1.43.2
 uvicorn==0.34.0
+dotenv
 langchain-community==0.1.25

@@ -1,15 +1,15 @@
 from fastapi import UploadFile
 from adapters.vector_store import VectorStore
 import io
-from langchain.embeddings import OpenAIEmbeddings 
+from langchain_openai import OpenAIEmbeddings
 from PyPDF2 import PdfReader
 import numpy as np 
-from ...config import config
+from config import config
 
 class DocumentService:
 
     def __init__(self,embedding_dim: int = 1536, normalize_embeddings: bool = True) -> None:
-        self.embeddings = OpenAIEmbeddings(api_key= config.api_key)
+        self.embeddings = OpenAIEmbeddings(openai_api_key= config.api_key)
         self.embedding_dim = embedding_dim
         self.vector_store = VectorStore(self.embedding_dim)
         self.normalize_embeddings = normalize_embeddings
