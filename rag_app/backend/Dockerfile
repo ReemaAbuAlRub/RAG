@@ -1,7 +1,5 @@
-# Use Conda official image
 FROM continuumio/miniconda3:latest
 
-# Set working directory
 WORKDIR /app/app
 
 COPY requirements.txt .

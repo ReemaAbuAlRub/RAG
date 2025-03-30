@@ -4,3 +4,4 @@ rag_app/backend/app/build
 venv/
 *.pyc
 __pycache__/
+*.DS_Store
